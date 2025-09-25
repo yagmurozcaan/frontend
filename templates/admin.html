@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Paneli</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 90%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4facfe;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #e0f0ff;
+        }
+
+        a {
+            color: #4facfe;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h2>Raporlar</h2>
+    <table>
+        <tr>
+            <th>İsim</th>
+            <th>Soyisim</th>
+            <th>Dosya</th>
+            <th>Segmentler</th>
+            <th>Final Tahmin</th>
+        </tr>
+        {% for rec in records %}
+        <tr>
+            <td>{{ rec.isim }}</td>
+            <td>{{ rec.soyisim }}</td>
+            <td><a href="{{ url_for('static', filename='../uploads/' + rec.dosya) }}">{{ rec.dosya }}</a></td>
+            <td>{{ rec.segmentler }}</td>
+            <td>{{ rec.final_prediction }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

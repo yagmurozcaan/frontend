@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Giriş</title>
+    <style>
+        /* Genel stil */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Kart kutusu */
+        .card {
+            background: #fff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            text-align: center;
+            width: 350px;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .card h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #555;
+            text-align: left;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+
+        input:focus {
+            border-color: #4facfe;
+            outline: none;
+        }
+
+        .btn {
+            margin-top: 25px;
+            padding: 12px;
+            width: 100%;
+            background: #4facfe;
+            border: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #3a8dde;
+        }
+
+        /* Sağ alttaki admin butonu */
+        .admin-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #222;
+            color: #fff;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 50px;
+            font-size: 14px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: all 0.3s;
+        }
+
+        .admin-btn:hover {
+            opacity: 1;
+            background: #000;
+        }
+
+        /* Animasyon */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Kullanıcı Girişi</h2>
+        <form action="/record" method="POST">
+            <label>İsim:</label>
+            <input type="text" name="isim" required>
+            
+            <label>Soyisim:</label>
+            <input type="text" name="soyisim" required>
+            
+            <button type="submit" class="btn">Devam Et</button>
+        </form>
+    </div>
+
+    <!-- Sağ alt köşe admin butonu -->
+    <button class="admin-btn" onclick="window.location.href='/admin_login'">
+        Yetkili Girişi
+    </button>
+</body>
+</html>
