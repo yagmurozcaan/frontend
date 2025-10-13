@@ -1,81 +1,170 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Paneli</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f0f2f5;
-            margin: 0;
-            padding: 20px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Paneli | Erken Teşhis</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #fff; /* Arka plan beyaz */
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
 
-        h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-        }
+/* Ana kart */
+.container {
+    background: #fff;
+    width: 95%;
+    max-width: 1000px;
+    border-radius: 25px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    padding: 40px 30px;
+    text-align: center;
+    overflow-x: auto;
+    animation: fadeIn 0.8s ease;
+}
 
-        table {
-            width: 90%;
-            margin: 0 auto;
-            border-collapse: collapse;
-            background: #fff;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
 
-        th, td {
-            padding: 12px 15px;
-            text-align: center;
-        }
+h2 {
+    color: #1b1c1e;
+    font-size: 28px;
+    margin-bottom: 30px;
+}
 
-        th {
-            background-color: #4facfe;
-            color: #fff;
-            font-weight: bold;
-        }
+/* Filtreler */
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
+input[type="text"], select {
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    transition: 0.3s;
+}
 
-        tr:hover {
-            background-color: #e0f0ff;
-        }
+input[type="text"]:focus, select:focus {
+    outline: none;
+    border-color: #3b82f6;
+}
 
-        a {
-            color: #4facfe;
-            text-decoration: none;
-        }
+/* Tablo */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+}
 
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+th, td {
+    padding: 12px 15px;
+    text-align: center;
+    font-size: 14px;
+}
+
+th {
+    background: linear-gradient(135deg, #3b82f6, #60a5fa);
+    color: #fff;
+    font-weight: 600;
+}
+
+tr:nth-child(even) { background-color: #f9f9f9; }
+tr:hover { background-color: #e0f0ff; }
+
+a {
+    color: #3b82f6;
+    text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+.final-otizm { background-color: #ffcccc; border-radius: 6px; padding: 4px 8px; display:inline-block; }
+.final-normal { background-color: #ccffcc; border-radius: 6px; padding: 4px 8px; display:inline-block; }
+
+/* Responsive */
+@media(max-width:768px){
+    table, th, td { font-size:12px; }
+    .filters { flex-direction: column; align-items: center; }
+}
+</style>
 </head>
 <body>
+
+<div class="container">
     <h2>Raporlar</h2>
-    <table>
-        <tr>
-            <th>İsim</th>
-            <th>Soyisim</th>
-            <th>Dosya</th>
-            <th>Segmentler</th>
-            <th>Final Tahmin</th>
-        </tr>
-        {% for rec in records %}
-        <tr>
-            <td>{{ rec.isim }}</td>
-            <td>{{ rec.soyisim }}</td>
-            <td><a href="{{ url_for('static', filename='../uploads/' + rec.dosya) }}">{{ rec.dosya }}</a></td>
-            <td>{{ rec.segmentler }}</td>
-            <td>{{ rec.final_prediction }}</td>
-        </tr>
-        {% endfor %}
+
+    <div class="filters">
+        <input type="text" id="searchInput" placeholder="Ara...">
+        <select id="finalFilter">
+            <option value="">Tüm Tahminler</option>
+            <option value="Otizm olabilir">Otizm olabilir</option>
+            <option value="Otizm değil">Otizm değil</option>
+        </select>
+    </div>
+
+    <table id="reportTable">
+        <thead>
+            <tr>
+                <th>İsim</th>
+                <th>Soyisim</th>
+                <th>Dosya</th>
+                <th>Segmentler</th>
+                <th>Final Tahmin</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rec in records %}
+            <tr>
+                <td>{{ rec.isim }}</td>
+                <td>{{ rec.soyisim }}</td>
+                <td><a href="{{ url_for('static', filename='../uploads/' + rec.dosya) }}">{{ rec.dosya }}</a></td>
+                <td>{{ rec.segmentler }}</td>
+                <td class="{{ 'final-otizm' if rec.final_prediction == 'Otizm olabilir' else 'final-normal' }}">{{ rec.final_prediction }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
+</div>
+
+<script>
+const searchInput = document.getElementById('searchInput');
+const finalFilter = document.getElementById('finalFilter');
+const table = document.getElementById('reportTable').getElementsByTagName('tbody')[0];
+
+function filterTable() {
+    const searchValue = searchInput.value.toLowerCase();
+    const finalValue = finalFilter.value;
+
+    for (let row of table.rows) {
+        const isim = row.cells[0].innerText.toLowerCase();
+        const soyisim = row.cells[1].innerText.toLowerCase();
+        const final = row.cells[4].innerText;
+
+        const matchesSearch = isim.includes(searchValue) || soyisim.includes(searchValue);
+        const matchesFinal = finalValue === "" || final === finalValue;
+
+        row.style.display = (matchesSearch && matchesFinal) ? "" : "none";
+    }
+}
+
+searchInput.addEventListener('input', filterTable);
+finalFilter.addEventListener('change', filterTable);
+</script>
+
 </body>
 </html>

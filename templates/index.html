@@ -1,122 +1,189 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <title>Giriş</title>
-    <style>
-        /* Genel stil */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erken Teşhis - Giriş</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #eef2f7;
+    font-family: 'Inter', sans-serif;
+}
 
-        /* Kart kutusu */
-        .card {
-            background: #fff;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            text-align: center;
-            width: 350px;
-            animation: fadeIn 0.6s ease;
-        }
+/* Kart kapsayıcı */
+.card-container {
+    display: flex;
+    width: 850px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+    animation: fadeIn 0.8s ease;
+}
 
-        .card h2 {
-            margin-bottom: 20px;
-            color: #333;
-        }
+/* Animasyon */
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
 
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: bold;
-            color: #555;
-            text-align: left;
-        }
+/* Sol panel */
+.left-card {
+    width: 50%;
+    background: linear-gradient(135deg, #3578e5, #1c4990); /* Daha koyu tonlar */
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 60px 40px;
+    text-align: center;
+}
 
-        input {
-            width: 100%;
-            padding: 12px;
-            margin-top: 6px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: border 0.3s;
-        }
+.left-card h1 {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.3); /* Okunaklılık için gölge */
+}
 
-        input:focus {
-            border-color: #4facfe;
-            outline: none;
-        }
+.left-card p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #f0f8ff;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2); /* Hafif gölge */
+}
 
-        .btn {
-            margin-top: 25px;
-            padding: 12px;
-            width: 100%;
-            background: #4facfe;
-            border: none;
-            color: #fff;
-            font-weight: bold;
-            font-size: 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
+/* Sağ panel */
+.right-card {
+    width: 50%;
+    background: #fff;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
-        .btn:hover {
-            background: #3a8dde;
-        }
+.right-card h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #1b1c1e;
+}
 
-        /* Sağ alttaki admin butonu */
-        .admin-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #222;
-            color: #fff;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 50px;
-            font-size: 14px;
-            cursor: pointer;
-            opacity: 0.8;
-            transition: all 0.3s;
-        }
+/* Form */
+form {
+    width: 100%;
+}
 
-        .admin-btn:hover {
-            opacity: 1;
-            background: #000;
-        }
+label {
+    display: block;
+    text-align: left;
+    font-weight: 500;
+    margin-top: 15px;
+    color: #555;
+}
 
-        /* Animasyon */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+input {
+    width: 100%;
+    padding: 14px;
+    margin-top: 6px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: #4facfe;
+    box-shadow: 0 0 8px rgba(59,130,246,0.3);
+}
+
+button {
+    margin-top: 25px;
+    width: 100%;
+    padding: 14px 0;
+    background: linear-gradient(135deg, #3b82f6, #60a5fa);
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(59,130,246,0.3);
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+}
+
+/* Admin butonu */
+.admin-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #1c4990;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 50px;
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0.85;
+    transition: 0.3s;
+}
+
+.admin-btn:hover {
+    opacity: 1;
+    background: #4e66bc;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .card-container {
+        flex-direction: column;
+        width: 90%;
+    }
+    .left-card, .right-card {
+        width: 100%;
+        border-radius: 20px;
+    }
+}
+</style>
 </head>
 <body>
-    <div class="card">
-        <h2>Kullanıcı Girişi</h2>
-        <form action="/record" method="POST">
-            <label>İsim:</label>
-            <input type="text" name="isim" required>
-            
-            <label>Soyisim:</label>
-            <input type="text" name="soyisim" required>
-            
-            <button type="submit" class="btn">Devam Et</button>
-        </form>
+
+<div class="card-container">
+    <div class="left-card">
+        <h1>🎯 Erken Müdahale Hayat Kurtarır</h1>
+        <p>Otizmli çocukların potansiyelini erken teşhis ve destekle en iyi şekilde ortaya çıkarmak için buradayız.  
+        Hemen giriş yapın ve verilerinizi güvenle kaydedin.</p>
     </div>
 
-    <!-- Sağ alt köşe admin butonu -->
-    <button class="admin-btn" onclick="window.location.href='/admin_login'">
-        Yetkili Girişi
-    </button>
+    <div class="right-card">
+        <h2>Kullanıcı Girişi</h2>
+        <form action="/record" method="POST">
+            <label>İsim</label>
+            <input type="text" name="isim" required>
+
+            <label>Soyisim</label>
+            <input type="text" name="soyisim" required>
+
+            <button type="submit">Devam Et</button>
+        </form>
+    </div>
+</div>
+
+<button class="admin-btn" onclick="window.location.href='/admin_login'">Yetkili Girişi</button>
+
 </body>
 </html>

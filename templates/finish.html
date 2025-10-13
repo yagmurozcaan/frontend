@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oyun Tamamlandı | Erken Teşhis</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ----------------------------
+   GENEL SAYFA STİLİ
+-----------------------------*/
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #eef3f9, #f8fafc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* ----------------------------
+   ÜST MENÜ (NAVBAR)
+-----------------------------*/
+.navbar {
+    position: absolute;
+    top: 25px;
+    right: 35px;
+    font-size: 15px;
+}
+.navbar a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: color 0.25s ease;
+}
+.navbar a:hover {
+    color: #000;
+}
+
+/* ----------------------------
+   KART (ORTADAKİ KUTU)
+-----------------------------*/
+.container {
+    background: white;
+    width: 480px;
+    border-radius: 25px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    text-align: center;
+    padding: 45px 40px;
+    animation: fadeIn 0.8s ease;
+}
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+/* ----------------------------
+   YAZILAR
+-----------------------------*/
+.logo {
+    font-size: 20px;
+    color: #3b82f6;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+h2 {
+    color: #1b1c1e;
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+p {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+/* ----------------------------
+   BUTON
+-----------------------------*/
+.btn {
+    background: linear-gradient(135deg, #3b82f6, #60a5fa);
+    color: white;
+    font-weight: 600;
+    border: none;
+    padding: 14px 35px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    font-size: 16px;
+    box-shadow: 0 6px 15px rgba(59,130,246,0.3);
+}
+.btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+}
+
+/* ----------------------------
+   RESPONSIVE (MOBİL)
+-----------------------------*/
+@media (max-width: 520px) {
+    .container {
+        width: 90%;
+        padding: 35px 25px;
+    }
+    .navbar {
+        display: none;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ÜST MENÜ -->
+<div class="navbar">
+    <a href="/">Ana Sayfa</a>
+    <a href="#">Oyunlar</a>
+    <a href="#">Kaynaklar</a>
+    <a href="#"><img src="/static/user_icon.png" alt="Profil" style="width:28px; vertical-align:middle; border-radius:50%;"></a>
+</div>
+
+<!-- ANA KUTU -->
+<div class="container">
+    <div class="logo">🎯 Erken Teşhis</div>
+    <h2>Oyun Tamamlandı!</h2>
+    <p>Tebrikler! Oyunu başarıyla tamamladınız.<br>
+       Verileriniz güvenli şekilde kaydedildi.</p>
+    <button class="btn" onclick="window.location.href='/'">Onayla ve Bitir</button>
+</div>
+
+</body>
+</html>

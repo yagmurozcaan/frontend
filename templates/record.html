@@ -4,94 +4,30 @@
 <meta charset="UTF-8">
 <title>Otizm Testi - Oyun Kaydı</title>
 <style>
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f0f2f5;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
-    margin: 0;
-    padding-top:50px;
-}
-.card {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    padding: 20px;
-    width: 400px;
-    text-align: center;
-    transition: all 0.5s ease-in-out;
-}
-.card.shrink {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 280px;
-    padding: 10px;
-}
-h3 { margin-bottom: 10px; color: #333; font-size: 16px; }
-video {
-    width: 100%;
-    border-radius: 12px;
-    border: 2px solid #ddd;
-    margin-bottom: 10px;
-}
-.btn {
-    padding: 10px 20px;
-    margin: 5px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: all 0.3s ease;
-}
-.start { background-color: #28a745; color: white; }
-.start:hover { background-color: #218838; }
-.stop { background-color: #dc3545; color: white; }
-.stop:hover { background-color: #c82333; }
-.stop:disabled, .start:disabled { opacity: 0.6; cursor: not-allowed; }
-
-#gameArea {
-    width: 600px; height: 400px;
-    border:2px solid #ccc;
-    margin-left: 20px; position:relative;
-    background:#fffbe6; border-radius:12px;
-    overflow:hidden;
-    display:flex; justify-content:center; align-items:center;
-    font-size: 48px; font-weight:bold; color: #333;
-}
-#target {
-    position:absolute; width:50px; height:50px;
-    background:red; border-radius:50%; display:none;
-}
-#face {
-    position:absolute; display:none;
-    width:300px; height:300px;
-    border-radius:12px;
-}
-#nameCall {
-    display:none;
-    position:absolute;
-    font-size:48px;
-    font-weight:bold;
-    color:#333;
-}
-#loadingText {
-    display:none;
-    position:absolute;
-    font-size:32px;
-    font-weight:bold;
-    color:#555;
-    top:50%; left:50%;
-    transform: translate(-50%, -50%);
-}
+body { font-family: 'Comic Neue', sans-serif; background: linear-gradient(135deg, #fff1f0, #e0f7fa); display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin:0; padding-top:50px;}
+.card { background:#fff; border-radius:25px; box-shadow:0 15px 40px rgba(0,0,0,0.1); padding:30px; width:450px; text-align:center; transition: all 0.5s ease, transform 0.3s ease;}
+.card:hover { transform: translateY(-8px) scale(1.03);}
+.card.shrink { position: fixed; bottom:20px; right:20px; width:270px; padding:20px;}
+video { width:100%; border-radius:20px; border:2px solid #cce7ff; margin-bottom:20px; box-shadow:0 6px 25px rgba(0,0,0,0.1);}
+.btn { padding:14px 28px; margin:5px; border:none; border-radius:15px; cursor:pointer; font-weight:700; font-size:16px; transition: all 0.3s ease, transform 0.2s ease; box-shadow:0 5px 15px rgba(0,0,0,0.1);}
+.start { background: linear-gradient(135deg, #a8edea, #fed6e3); color:#555;}
+.start:hover { transform:scale(1.08); background: linear-gradient(135deg,#81e6d9,#ffc1e3);}
+.stop { background: linear-gradient(135deg,#fcd5ce,#fef6e4); color:#555;}
+.stop:hover { transform:scale(1.08); background: linear-gradient(135deg,#f9c5d1,#fff9c4);}
+.stop:disabled, .start:disabled { opacity:0.6; cursor:not-allowed;}
+#gameArea { width:1200px; height:600px; border:3px solid #ffd6e0; margin-left:30px; position:relative; background:#fff8ec; border-radius:25px; overflow:hidden; display:flex; justify-content:center; align-items:center; font-size:50px; font-weight:bold; color:#555; box-shadow:0 12px 35px rgba(0,0,0,0.08);}
+#target { position:absolute; width:60px; height:60px; background:linear-gradient(135deg,#ffd1dc,#ffb3b3); border-radius:50%; display:none; box-shadow:0 4px 15px rgba(0,0,0,0.15); cursor:pointer; animation:bounce 1s infinite alternate;}
+#faceVideo { position:absolute; display:none; width:100%; height:100%; border-radius:25px;}
+#nameCall { display:none; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); }
+#nameCall img { width:450px; }
+#loadingText { display:none; position:absolute; font-size:36px; font-weight:bold; color:#888; top:50%; left:50%; transform:translate(-50%, -50%);}
+@keyframes bounce {0% {transform:translateY(0);}100% {transform:translateY(-15px);}}
 </style>
 </head>
 <body>
 
 <div class="card" id="recordCard">
-    <h3>MERHABA: {{ isim }} {{ soyisim }}</h3>
+    <h3>{{ isim }} {{ soyisim }}</h3>
     <video id="preview" autoplay playsinline muted></video>
     <div>
         <button id="startBtn" class="btn start">Kaydı Başlat</button>
@@ -101,10 +37,18 @@ video {
 
 <div id="gameArea">
     <div id="target"></div>
-    <img id="face" src="" alt="face">
-    <div id="nameCall">Merhaba {{ isim }}!</div>
+    <video id="faceVideo" autoplay muted></video>
+    <!-- GIF için nameCall -->
+    <div id="nameCall">
+        <img src="/static/el-sallama.gif" alt="El Sallama">
+    </div>
     <div id="loadingText">Yükleniyor, lütfen bekleyin...</div>
 </div>
+
+<!-- MediaPipe FaceMesh JS -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
 
 <script>
 let mediaRecorder;
@@ -115,7 +59,7 @@ const stopBtn = document.getElementById('stopBtn');
 const card = document.getElementById('recordCard');
 const gameArea = document.getElementById('gameArea');
 const target = document.getElementById('target');
-const face = document.getElementById('face');
+const faceVideo = document.getElementById('faceVideo');
 const nameCall = document.getElementById('nameCall');
 const loadingText = document.getElementById('loadingText');
 
@@ -136,8 +80,12 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: false })
         fetch('/upload', { method:'POST', body:formData })
         .then(resp => {
             loadingText.style.display = 'none';
-            if(resp.ok) alert("Video başarıyla yüklendi!");
-            else alert("Hata oluştu.");
+            if (resp.ok) {
+                window.location.href = "/finish";
+            } else {
+                alert("Video yüklenirken hata oluştu.");
+            }
+
         });
 
         card.classList.remove('shrink');
@@ -152,6 +100,7 @@ startBtn.onclick = () => {
     stopBtn.disabled = false;
     card.classList.add('shrink');
     startSequentialGames();
+    startEyeTracking();  // Göz takibi başlat
 };
 
 stopBtn.onclick = () => {
@@ -161,6 +110,7 @@ stopBtn.onclick = () => {
     clearAllIntervals();
 };
 
+// ---------- Oyun Fonksiyonları ----------
 let intervals = [];
 let timeouts = [];
 
@@ -170,7 +120,7 @@ function clearAllIntervals(){
     timeouts.forEach(t=>clearTimeout(t));
     timeouts = [];
     target.style.display='none';
-    face.style.display='none';
+    faceVideo.style.display='none';
     nameCall.style.display='none';
 }
 
@@ -185,21 +135,31 @@ function randomTarget() {
     audio.play();
 }
 
-// Mutlu/Üzgün
-function showFace(emotion) {
-    face.src = '/static/'+emotion;
-    face.style.left = '150px';
-    face.style.top = '50px';
-    face.style.display='block';
+// Video göster
+function showFaceVideo() {
+    faceVideo.src = '/static/mutlu_video.mp4';
+    faceVideo.style.display = 'block';
+    faceVideo.play();
+
+    faceVideo.onloadedmetadata = () => {
+        setTimeout(() => {
+            faceVideo.pause();
+            faceVideo.style.display = 'none';
+            if(mediaRecorder.state!=="inactive") mediaRecorder.stop();
+        }, faceVideo.duration * 1000);
+    };
+
     const audio = new Audio('/static/sound.mp3'); 
     audio.play();
 }
 
-// İsme seslenme
+// İsme seslenme ve GIF göster
 function showNameCall(){
     nameCall.style.display='block';
-    const msg = new SpeechSynthesisUtterance("Merhaba {{ isim }}!");
+    const msg = new SpeechSynthesisUtterance(`Merhaba {{ isim }}!`);
     window.speechSynthesis.speak(msg);
+
+    setTimeout(() => { nameCall.style.display='none'; }, 5000);
 }
 
 // Oyunları sırayla başlat
@@ -210,41 +170,58 @@ function startSequentialGames(){
     function nextStep(){
         step++;
         if(step==1){
-            // Nokta oyunu 12 saniye
             intervals.push(setInterval(randomTarget, 1000));
-            timeouts.push(setTimeout(()=>{
-                clearAllIntervals();
-                nextStep();
-            },12000));
+            timeouts.push(setTimeout(()=>{ clearAllIntervals(); nextStep(); },12000));
         } else if(step==2){
-            // İsme seslenme (rastgele bir anda)
-            timeouts.push(setTimeout(()=>{
-                showNameCall();
-                timeouts.push(setTimeout(()=>{
-                    nameCall.style.display='none';
-                    nextStep();
-                }, 5000));
-            }, 1000 + Math.random()*5000));
+            timeouts.push(setTimeout(()=>{ showNameCall(); timeouts.push(setTimeout(()=>{ nameCall.style.display='none'; nextStep(); },5000)); },1000 + Math.random()*5000));
         } else if(step==3){
-            // Mutlu/Üzgün sırayla
-            let emotions=['happy.png','sad.png'];
-            let delay=0;
-            emotions.forEach(em=>{
-                timeouts.push(setTimeout(()=>{
-                    showFace(em);
-                    timeouts.push(setTimeout(()=>{
-                        face.style.display='none';
-                        if(em===emotions[emotions.length-1]){
-                            if(mediaRecorder.state!=="inactive") mediaRecorder.stop();
-                        }
-                    }, 5000));
-                }, delay));
-                delay+=6000;
-            });
+            timeouts.push(setTimeout(()=>{ showFaceVideo(); },1000));
         }
     }
-
     nextStep();
+}
+
+// ---------- Göz Takibi ----------
+function startEyeTracking() {
+    const videoElement = document.getElementById('preview');
+    let alertTriggered = false;
+    let alertStartTime = null;
+    const ALERT_SECONDS = 3;
+    const EYE_AR_THRESHOLD = 0.25;
+
+    const faceMesh = new FaceMesh({locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`});
+    faceMesh.setOptions({ maxNumFaces: 1, refineLandmarks: true, minDetectionConfidence: 0.5, minTrackingConfidence:0.5 });
+
+    faceMesh.onResults(results => {
+        let alertCondition = false;
+        if(results.multiFaceLandmarks && results.multiFaceLandmarks.length>0){
+            const landmarks = results.multiFaceLandmarks[0];
+
+            function eyeAspectRatio(indices) {
+                function dist(a,b){ return Math.hypot(a.x-b.x,a.y-b.y); }
+                const hor = dist(landmarks[indices[0]], landmarks[indices[3]]);
+                const ver = (dist(landmarks[indices[1]], landmarks[indices[5]]) + dist(landmarks[indices[2]], landmarks[indices[4]]))/2;
+                return ver/hor;
+            }
+
+            const LEFT_EYE = [33,160,158,133,153,144];
+            const RIGHT_EYE = [362,385,387,263,373,380];
+            const ear = (eyeAspectRatio(LEFT_EYE) + eyeAspectRatio(RIGHT_EYE))/2;
+            if(ear < EYE_AR_THRESHOLD) alertCondition = true;
+        } else { alertCondition = true; }
+
+        if(alertCondition){
+            if(!alertStartTime) alertStartTime = Date.now();
+            else if(Date.now() - alertStartTime > ALERT_SECONDS*1000 && !alertTriggered){
+                alertTriggered = true;
+                const msg = new SpeechSynthesisUtterance(`Hadi ekrana bakalım, {{ isim }}!`);
+                window.speechSynthesis.speak(msg);
+            }
+        } else { alertStartTime = null; alertTriggered = false; }
+    });
+
+    const camera = new Camera(videoElement, { onFrame: async ()=>{ await faceMesh.send({image: videoElement}); }, width: 640, height:480 });
+    camera.start();
 }
 </script>
 </body>
