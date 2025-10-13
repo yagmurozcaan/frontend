@@ -1,70 +1,132 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Otizm Erken Teşhis Farkındalık Projesi</title>
-    <style>
-        body {
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f4f6f8, #e8f0ff);
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oyun Tamamlandı | Erken Teşhis</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* -------------------- BODY & ARKA PLAN -------------------- */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(79,172,254,0.15), transparent),
+                radial-gradient(1000px 500px at 90% 20%, rgba(0,242,254,0.15), transparent),
+                linear-gradient(135deg, #0b1220, #0a0f1a);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+    color: #e5e7eb;
+    padding-top:50px;
+}
 
-        .container {
-            text-align: center;
-            background: white;
-            padding: 60px 80px;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            width: 480px;
-        }
+/* Arka plan animasyonu */
+body::before {
+    content: '';
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background-image: radial-gradient(#00f2fe 1px, transparent 0),
+                      radial-gradient(#4facfe 1px, transparent 0);
+    background-size: 40px 40px, 40px 40px;
+    background-position: 0 0, 20px 20px;
+    opacity: 0.15;
+    z-index: -1;
+    animation: moveDots 60s linear infinite;
+}
+@keyframes moveDots { from {background-position:0 0,20px 20;} to {background-position:400px 400px,420px 420px;} }
 
-        h1 {
-            font-size: 1.8rem;
-            color: #111827;
-            margin-bottom: 15px;
-        }
+.neural-bg { position: fixed; inset:0; pointer-events:none; overflow:hidden; z-index:0; }
+.neural-bg .pulse { position:absolute; width:700px; height:700px; border-radius:50%; background: radial-gradient(closest-side, rgba(79,172,254,0.12), rgba(79,172,254,0) 70%); animation: pulse 9s ease-in-out infinite; filter: blur(2px); }
+.neural-bg .pulse.p1 { top:-160px; left:-160px; animation-delay:0s; }
+.neural-bg .pulse.p2 { bottom:-180px; right:-200px; animation-delay:3s; }
+.neural-bg .node { position:absolute; width:6px; height:6px; border-radius:50%; background:#93c5fd; box-shadow:0 0 12px rgba(147,197,253,0.8); opacity:0.55; animation: float 10s ease-in-out infinite; }
+.neural-bg .n1 { top:20%; left:22%; animation-delay:.3s; }
+.neural-bg .n2 { top:38%; left:68%; animation-delay:1.0s; }
+.neural-bg .n3 { top:72%; left:30%; animation-delay:2.1s; }
+.neural-bg .n4 { top:78%; left:82%; animation-delay:3.2s; }
+@keyframes pulse { 0%,100%{transform:scale(.9);opacity:.55} 50%{transform:scale(1.15);opacity:.9} }
+@keyframes float { 0%,100%{transform:translate(0,0)} 50%{transform:translate(10px,-8px)} }
 
-        p {
-            font-size: 0.95rem;
-            color: #4b5563;
-            margin-bottom: 30px;
-        }
+/* ---------------------------- KART ---------------------------- */
+.card {
+    background: rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:25px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow:0 20px 50px rgba(0,0,0,0.35);
+    text-align: center;
+    padding:45px 40px;
+    width:480px;
+    margin-bottom:30px;
+    animation: fadeIn 0.8s ease;
+}
+@keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
 
-        .start-btn {
-            background-color: #3b82f6;
-            color: white;
-            border: none;
-            padding: 12px 32px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.2s ease;
-        }
+.logo { font-size: 20px; color: #60a5fa; font-weight: 600; margin-bottom: 25px; }
+h2 { color:#fff; font-size:26px; margin-bottom:10px; }
+p { color:#ddd; font-size:15px; line-height:1.6; margin-bottom:20px; }
 
-        .start-btn:hover {
-            background-color: #2563eb;
-            transform: scale(1.05);
-        }
+/* ---------------------------- BUTON ---------------------------- */
+.btn {
+    background: linear-gradient(135deg, #3b82f6, #60a5fa);
+    color: white;
+    font-weight: 600;
+    border: none;
+    padding: 14px 35px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    font-size: 16px;
+    box-shadow: 0 6px 15px rgba(59,130,246,0.3);
+    margin-top: 12px;
+}
+.btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+}
 
-        @media (max-width: 600px) {
-            .container {
-                width: 85%;
-                padding: 40px 20px;
-            }
-        }
-    </style>
+/* ---------------------------- RESPONSIVE ---------------------------- */
+@media(max-width:520px) {
+    .card { width:90%; padding:35px 25px; }
+    .navbar { display:none; }
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>Otizm Erken Teşhis Farkındalık Projesi</h1>
-        <p>Otizm spektrum bozukluğu (OSB) hakkında bilgi edinmek ve erken teşhisin önemini anlamak için bu projeye katılın.</p>
-        <button class="start-btn" onclick="window.location.href='/index'">Başla</button>
-    </div>
+
+<div class="neural-bg" aria-hidden="true">
+    <div class="pulse p1"></div>
+    <div class="pulse p2"></div>
+    <div class="node n1"></div>
+    <div class="node n2"></div>
+    <div class="node n3"></div>
+    <div class="node n4"></div>
+</div>
+
+<!-- ÜST MENÜ -->
+<div class="navbar">
+    <a href="/">Ana Sayfa</a>
+    <a href="#">Oyunlar</a>
+    <a href="#">Kaynaklar</a>
+    <a href="#"><img src="/static/user_icon.png" alt="Profil" style="width:28px; vertical-align:middle; border-radius:50%;"></a>
+</div>
+
+<!-- OYUN TAMAMLANDI KARTI -->
+<div class="card">
+    <div class="logo">🎯 Erken Teşhis</div>
+    <h2>Oyun Tamamlandı!</h2>
+    <p>Tebrikler! Oyunu başarıyla tamamladınız.<br>
+       Verileriniz güvenli şekilde kaydedildi.</p>
+    <!-- Ana buton -->
+    <button class="btn" onclick="window.location.href='/home'">Ana sayfa</button>
+    <!-- Yetkili giriş butonu -->
+    <button class="btn" onclick="window.location.href='/admin_login'">Yetkili Girişi</button>
+</div>
+
 </body>
 </html>

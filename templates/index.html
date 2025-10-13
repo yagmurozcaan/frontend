@@ -1,189 +1,193 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Erken Teşhis - Giriş</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #eef2f7;
-    font-family: 'Inter', sans-serif;
-}
+    <meta charset="UTF-8">
+    <title>Giriş</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            /* Mevcut Arka Planı Koruyoruz */
+            background: radial-gradient(1200px 600px at 10% 10%, rgba(79,172,254,0.25), transparent),
+                        radial-gradient(1000px 500px at 90% 20%, rgba(0,242,254,0.25), transparent),
+                        linear-gradient(135deg, #111827, #0b1220);
+            color: #e5e7eb;
+            overflow: hidden; /* Animasyonun taşmasını engeller */
+            position: relative; /* Animasyon katmanı için bağlam */
+        }
+        /* record.html ve admin.html'deki özel hizalama stillerini koruyun */
+        /* Örneğin record.html'de: align-items: flex-start; padding: 40px 24px; */
 
-/* Kart kapsayıcı */
-.card-container {
-    display: flex;
-    width: 850px;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 15px 50px rgba(0,0,0,0.12);
-    animation: fadeIn 0.8s ease;
-}
+        /* YENİ: Sinir Ağı/Nokta Animasyonu Katmanı */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Nokta efekti oluşturmak için büyük, yarı saydam bir görüntü */
+            background-image: radial-gradient(#00f2fe 1px, transparent 0),
+                              radial-gradient(#4facfe 1px, transparent 0);
+            background-size: 40px 40px, 40px 40px; /* Noktaların aralığı */
+            background-position: 0 0, 20px 20px; /* İkinci nokta setini kaydır */
+            opacity: 0.15; /* Çok hafif bir etki için */
+            z-index: -1; /* Arka planda kalmasını sağlar */
+            animation: moveDots 60s linear infinite; /* Yavaş hareket animasyonu */
+        }
 
-/* Animasyon */
-@keyframes fadeIn {
-    from {opacity: 0; transform: translateY(20px);}
-    to {opacity: 1; transform: translateY(0);}
-}
+        /* YENİ: Animasyon Keyframes */
+        @keyframes moveDots {
+            from {
+                background-position: 0 0, 20px 20px;
+            }
+            to {
+                background-position: 400px 400px, 420px 420px; /* Büyük hareket mesafesi */
+            }
+        }
 
-/* Sol panel */
-.left-card {
-    width: 50%;
-    background: linear-gradient(135deg, #3578e5, #1c4990); /* Daha koyu tonlar */
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 60px 40px;
-    text-align: center;
-}
+        /* Animated neural network background */
+        .neural-bg { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+        .neural-bg .pulse { position: absolute; width: 600px; height: 600px; border-radius: 50%;
+            background: radial-gradient(closest-side, rgba(0,242,254,0.12), rgba(0,242,254,0) 70%);
+            animation: pulse 8s ease-in-out infinite; filter: blur(2px); }
+        .neural-bg .pulse.p1 { top: -140px; left: -140px; animation-delay: 0s; }
+        .neural-bg .pulse.p2 { bottom: -160px; right: -160px; animation-delay: 3s; }
+        .neural-bg .node { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: #7dd3fc;
+            box-shadow: 0 0 12px rgba(125,211,252,0.8); opacity: 0.6; animation: float 10s ease-in-out infinite; }
+        .neural-bg .n1 { top: 22%; left: 28%; animation-delay: .4s; }
+        .neural-bg .n2 { top: 45%; left: 62%; animation-delay: 1.2s; }
+        .neural-bg .n3 { top: 70%; left: 24%; animation-delay: 2.4s; }
+        .neural-bg .n4 { top: 78%; left: 80%; animation-delay: 3.6s; }
+        @keyframes pulse { 0%,100%{transform:scale(.9);opacity:.55} 50%{transform:scale(1.15);opacity:.9} }
+        @keyframes float { 0%,100%{transform:translate(0,0)} 50%{transform:translate(8px,-10px)} }
 
-.left-card h1 {
-    font-size: 30px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.3); /* Okunaklılık için gölge */
-}
+        .card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            padding: 36px;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+            text-align: center;
+            width: 360px;
+            animation: fadeIn 0.6s ease;
+        }
 
-.left-card p {
-    font-size: 16px;
-    line-height: 1.7;
-    color: #f0f8ff;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.2); /* Hafif gölge */
-}
+        .card h2 {
+            margin-bottom: 10px;
+            color: #fff;
+        }
 
-/* Sağ panel */
-.right-card {
-    width: 50%;
-    background: #fff;
-    padding: 60px 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+        .subtitle {
+            margin-bottom: 18px;
+            font-size: 13px;
+            color: #9ca3af;
+        }
 
-.right-card h2 {
-    font-size: 28px;
-    font-weight: 600;
-    margin-bottom: 30px;
-    color: #1b1c1e;
-}
+        label {
+            display: block;
+            margin-top: 14px;
+            font-weight: 600;
+            color: #cbd5e1;
+            text-align: left;
+            font-size: 13px;
+        }
 
-/* Form */
-form {
-    width: 100%;
-}
+        input {
+            width: 100%;
+            padding: 12px 14px;
+            margin-top: 8px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(17,24,39,0.35);
+            color: #e5e7eb;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+            transition: border 0.2s, box-shadow 0.2s, background 0.2s;
+        }
 
-label {
-    display: block;
-    text-align: left;
-    font-weight: 500;
-    margin-top: 15px;
-    color: #555;
-}
+        input::placeholder { color: #9ca3af; }
 
-input {
-    width: 100%;
-    padding: 14px;
-    margin-top: 6px;
-    border-radius: 12px;
-    border: 1px solid #ddd;
-    font-size: 15px;
-    transition: all 0.3s ease;
-}
+        input:focus {
+            border-color: rgba(0,212,255,0.6);
+            box-shadow: 0 0 0 4px rgba(0,212,255,0.12);
+            background: rgba(17,24,39,0.55);
+        }
 
-input:focus {
-    outline: none;
-    border-color: #4facfe;
-    box-shadow: 0 0 8px rgba(59,130,246,0.3);
-}
+        .btn {
+            margin-top: 22px;
+            padding: 12px;
+            width: 100%;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            border: none;
+            color: #0b1220;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            font-size: 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.08s ease, filter 0.2s ease;
+        }
 
-button {
-    margin-top: 25px;
-    width: 100%;
-    padding: 14px 0;
-    background: linear-gradient(135deg, #3b82f6, #60a5fa);
-    color: white;
-    font-weight: 600;
-    font-size: 16px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    box-shadow: 0 6px 15px rgba(59,130,246,0.3);
-    transition: all 0.3s ease;
-}
+        .btn:hover { filter: brightness(1.02) saturate(1.05); }
+        .btn:active { transform: translateY(1px); }
 
-button:hover {
-    transform: scale(1.05);
-    background: linear-gradient(135deg, #2563eb, #3b82f6);
-}
+        .admin-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #e5e7eb;
+            padding: 10px 16px;
+            border-radius: 50px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            backdrop-filter: blur(10px);
+        }
 
-/* Admin butonu */
-.admin-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #1c4990;
-    color: #fff;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 50px;
-    font-size: 14px;
-    cursor: pointer;
-    opacity: 0.85;
-    transition: 0.3s;
-}
+        .admin-btn:hover {
+            background: rgba(255,255,255,0.18);
+        }
 
-.admin-btn:hover {
-    opacity: 1;
-    background: #4e66bc;
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-    .card-container {
-        flex-direction: column;
-        width: 90%;
-    }
-    .left-card, .right-card {
-        width: 100%;
-        border-radius: 20px;
-    }
-}
-</style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
-
-<div class="card-container">
-    <div class="left-card">
-        <h1>🎯 Erken Müdahale Hayat Kurtarır</h1>
-        <p>Otizmli çocukların potansiyelini erken teşhis ve destekle en iyi şekilde ortaya çıkarmak için buradayız.  
-        Hemen giriş yapın ve verilerinizi güvenle kaydedin.</p>
+    <div class="neural-bg" aria-hidden="true">
+        <div class="pulse p1"></div>
+        <div class="pulse p2"></div>
+        <div class="node n1"></div>
+        <div class="node n2"></div>
+        <div class="node n3"></div>
+        <div class="node n4"></div>
     </div>
-
-    <div class="right-card">
+    <div class="card">
         <h2>Kullanıcı Girişi</h2>
+        <div class="subtitle">Lütfen bilgilerinizi girerek devam edin</div>
         <form action="/record" method="POST">
-            <label>İsim</label>
+            <label>İsim:</label>
             <input type="text" name="isim" required>
-
-            <label>Soyisim</label>
+            
+            <label>Soyisim:</label>
             <input type="text" name="soyisim" required>
-
-            <button type="submit">Devam Et</button>
+            
+            <button type="submit" class="btn">Devam Et</button>
         </form>
     </div>
-</div>
 
-<button class="admin-btn" onclick="window.location.href='/admin_login'">Yetkili Girişi</button>
-
+    <!-- Sağ alt köşe admin butonu -->
+    <button class="admin-btn" onclick="window.location.href='/admin_login'">Yetkili Girişi</button>
 </body>
 </html>
