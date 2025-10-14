@@ -80,7 +80,7 @@ video { width:100%; border-radius:12px; border:1px solid rgba(255,255,255,0.2); 
 
 /* -------------------- OYUN ALANI -------------------- */
 #gameArea {
-    width:640px; height:420px;
+    width:1200px; height:600px;
     border:1px solid rgba(255,255,255,0.12);
     margin-left:20px; position:relative;
     background: rgba(255,255,255,0.04); border-radius:12px;
@@ -88,7 +88,16 @@ video { width:100%; border-radius:12px; border:1px solid rgba(255,255,255,0.2); 
     font-size:48px; font-weight:bold; color:#e5e7eb;
 }
 #target { position:absolute; width:50px; height:50px; background: radial-gradient(circle at 30% 30%, #fb7185, #ef4444); box-shadow:0 10px 20px rgba(239,68,68,0.35); border-radius:50%; display:none; }
-#faceVideo, #face { position:absolute; display:none; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.35); }
+#faceVideo {
+    position: absolute;
+    display: none;
+    height: 100%;          /* Yüksekliği oyun alanına göre ayarla */
+    width: auto;           /* En boy oranını koru */
+    max-width: 100%;       /* Genişlik taşmasın */
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    object-fit: contain;   /* Taşmadan orantılı sığdır */
+}
 #nameCall { display:none; position:absolute; font-size:48px; font-weight:900; color:#e5e7eb; text-shadow:0 4px 20px rgba(0,0,0,0.45); }
 #loadingText { display:none; position:absolute; font-size:24px; font-weight:800; color:#e5e7eb; top:50%; left:50%; transform:translate(-50%,-50%); }
 

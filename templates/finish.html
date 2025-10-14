@@ -1,134 +1,146 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Oyun Tamamlandı | Erken Teşhis</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-/* ----------------------------
-   GENEL SAYFA STİLİ
------------------------------*/
-body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #eef3f9, #f8fafc);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tamamlandı</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-/* ----------------------------
-   ÜST MENÜ (NAVBAR)
------------------------------*/
-.navbar {
-    position: absolute;
-    top: 25px;
-    right: 35px;
-    font-size: 15px;
-}
-.navbar a {
-    margin-left: 20px;
-    text-decoration: none;
-    color: #555;
-    font-weight: 500;
-    transition: color 0.25s ease;
-}
-.navbar a:hover {
-    color: #000;
-}
-
-/* ----------------------------
-   KART (ORTADAKİ KUTU)
------------------------------*/
-.container {
-    background: white;
-    width: 480px;
-    border-radius: 25px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-    text-align: center;
-    padding: 45px 40px;
-    animation: fadeIn 0.8s ease;
-}
-@keyframes fadeIn {
-    from {opacity: 0; transform: translateY(20px);}
-    to {opacity: 1; transform: translateY(0);}
-}
-
-/* ----------------------------
-   YAZILAR
------------------------------*/
-.logo {
-    font-size: 20px;
-    color: #3b82f6;
-    font-weight: 600;
-    margin-bottom: 25px;
-}
-h2 {
-    color: #1b1c1e;
-    font-size: 26px;
-    margin-bottom: 10px;
-}
-p {
-    color: #555;
-    font-size: 15px;
-    line-height: 1.6;
-    margin-bottom: 40px;
-}
-
-/* ----------------------------
-   BUTON
------------------------------*/
-.btn {
-    background: linear-gradient(135deg, #3b82f6, #60a5fa);
-    color: white;
-    font-weight: 600;
-    border: none;
-    padding: 14px 35px;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: 0.3s ease;
-    font-size: 16px;
-    box-shadow: 0 6px 15px rgba(59,130,246,0.3);
-}
-.btn:hover {
-    transform: scale(1.05);
-    background: linear-gradient(135deg, #2563eb, #3b82f6);
-}
-
-/* ----------------------------
-   RESPONSIVE (MOBİL)
------------------------------*/
-@media (max-width: 520px) {
-    .container {
-        width: 90%;
-        padding: 35px 25px;
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(79,172,254,0.15), transparent),
+                  radial-gradient(1000px 500px at 90% 20%, rgba(0,242,254,0.15), transparent),
+                  linear-gradient(135deg, #0b1220, #0a0f1a);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      position: relative;
+      overflow: hidden;
+      color: #e5e7eb;
     }
-    .navbar {
-        display: none;
+
+    .background-glow {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(79,172,254,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: floatGlow 8s ease-in-out infinite;
+      filter: blur(40px);
     }
-}
-</style>
+
+    .background-glow:nth-child(1) {
+      top: 10%;
+      left: 15%;
+      animation-delay: 0s;
+    }
+
+    .background-glow:nth-child(2) {
+      bottom: 15%;
+      right: 10%;
+      animation-delay: 4s;
+    }
+
+    @keyframes floatGlow {
+      0%, 100% { transform: translateY(0); opacity: 0.6; }
+      50% { transform: translateY(-20px); opacity: 0.9; }
+    }
+
+    .card {
+      background: rgba(17, 25, 40, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 40px 60px;
+      text-align: center;
+      box-shadow: 0 0 60px rgba(79,172,254,0.15);
+      backdrop-filter: blur(12px);
+      position: relative;
+      z-index: 2;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card h1 {
+      color: #4facfe;
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .card p {
+      font-size: 1.1rem;
+      color: #cbd5e1;
+      margin-bottom: 30px;
+    }
+
+    /* Buton grubu */
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .card a {
+      display: inline-block;
+      background: linear-gradient(90deg, #4facfe, #00f2fe);
+      color: #0b1220;
+      font-weight: 600;
+      padding: 12px 26px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .card a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(79,172,254,0.4);
+    }
+
+    /* Yetkili giriş butonu - farklı renk */
+    .card a.admin {
+      background: linear-gradient(90deg, #f093fb, #f5576c);
+      color: #fff;
+    }
+
+    .card a.admin:hover {
+      box-shadow: 0 8px 25px rgba(240,147,251,0.4);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      padding: 1px;
+      background: linear-gradient(145deg, rgba(79,172,254,0.3), rgba(0,242,254,0.15));
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      pointer-events: none;
+    }
+  </style>
 </head>
 <body>
+  <div class="background-glow"></div>
+  <div class="background-glow"></div>
 
-<!-- ÜST MENÜ -->
-<div class="navbar">
-    <a href="/">Ana Sayfa</a>
-    <a href="#">Oyunlar</a>
-    <a href="#">Kaynaklar</a>
-    <a href="#"><img src="/static/user_icon.png" alt="Profil" style="width:28px; vertical-align:middle; border-radius:50%;"></a>
-</div>
-
-<!-- ANA KUTU -->
-<div class="container">
-    <div class="logo">🎯 Erken Teşhis</div>
-    <h2>Oyun Tamamlandı!</h2>
-    <p>Tebrikler! Oyunu başarıyla tamamladınız.<br>
-       Verileriniz güvenli şekilde kaydedildi.</p>
-    <button class="btn" onclick="window.location.href='/'">Onayla ve Bitir</button>
-</div>
-
+  <div class="card">
+    <h1>✔️ Tamamlandı</h1>
+    <p>Videonuz başarıyla yüklendi ve analiz işlemi tamamlandı.</p>
+    <div class="button-group">
+      <a href="/">Ana Sayfaya Dön</a>
+      <a href="/admin_login" class="admin_login">Yetkili Giriş</a>
+    </div>
+  </div>
 </body>
 </html>

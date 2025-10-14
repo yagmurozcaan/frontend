@@ -155,7 +155,10 @@ a:hover { text-decoration: underline; }
                 <th>Final Tahmin</th>
                 <th>Hand Motion</th>
                 <th>Head Motion</th>
-                <th>Blink Count</th>
+                <th>Spinning</th>
+                <th>Blink</th>
+                <th>created_at</th>
+
             </tr>
         </thead>
         <tbody>
@@ -163,12 +166,15 @@ a:hover { text-decoration: underline; }
             <tr>
                 <td>{{ rec.isim }}</td>
                 <td>{{ rec.soyisim }}</td>
-                <td><a href="{{ url_for('static', filename='../uploads/' + rec.dosya) }}">{{ rec.dosya }}</a></td>
+                <td><a href="{{ url_for('static', filename='uploads/' + rec.dosya) }}">{{ rec.dosya }}</a></td>
                 <td>{{ "%.2f"|format(rec.probability) }}</td>
                 <td class="{{ 'final-otizm' if rec.final_prediction == 'Otizm olabilir' else 'final-normal' }}">{{ rec.final_prediction }}</td>
-                <td>{{ rec.hand_motion }}</td>
-                <td>{{ rec.head_motion }}</td>
-                <td>{{ rec.blink_count }}</td>
+                <td>{{ rec.armflapping }}</td>
+                <td>{{ rec.headbanging }}</td>
+                <td>{{ rec.spinning }}</td>
+                <td>{{ rec.blink }}</td>
+                <td>{{ rec.created_at }}</td>
+
             </tr>
             {% endfor %}
         </tbody>
