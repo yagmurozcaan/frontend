@@ -12,13 +12,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #111827, #0b1220); /* Admin ile aynı arka plan */
+            background: linear-gradient(135deg, #111827, #0b1220);
             color: #e5e7eb;
             overflow: hidden;
             position: relative;
         }
 
-        /* Sinir ağı/animasyon nodları */
+        /* Arka plan animasyonu */
         .neural-bg {
             position: fixed;
             inset: 0;
@@ -45,6 +45,7 @@
             50% { transform: translate(10px, -8px); }
         }
 
+        /* Ana kutu */
         .container {
             text-align: center;
             background: rgba(255,255,255,0.06);
@@ -88,16 +89,69 @@
             transform: scale(1.05);
         }
 
+        /* KVKK modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .modal-content {
+            background: rgba(17,24,39,0.95);
+            padding: 30px 40px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 520px;
+            color: #f1f5f9;
+            text-align: left;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            animation: fadeIn 0.4s ease;
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+            color: #60a5fa;
+            text-align: center;
+        }
+
+        .modal-content p {
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .btn.accept {
+            background: #22c55e;
+            color: #fff;
+        }
+
+        .btn.reject {
+            background: #ef4444;
+            color: #fff;
+        }
+
         @keyframes fadeIn {
             from {opacity: 0; transform: translateY(20px);}
             to {opacity: 1; transform: translateY(0);}
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                width: 85%;
-                padding: 40px 20px;
-            }
         }
     </style>
 </head>
@@ -108,10 +162,55 @@
         <div class="node n3"></div>
         <div class="node n4"></div>
     </div>
+
     <div class="container">
         <h1>Otizm Erken Teşhis Farkındalık Projesi</h1>
         <p>Otizm spektrum bozukluğu (OSB) hakkında bilgi edinmek ve erken teşhisin önemini anlamak için bu projeye katılın.</p>
-        <button class="start-btn" onclick="window.location.href='/index'">Başla</button>
+        <button class="start-btn" onclick="openKvkkModal()">Başla</button>
     </div>
+
+    <!-- KVKK Modal -->
+    <div class="modal" id="kvkkModal">
+        <div class="modal-content">
+            <h2>KVKK Aydınlatma Metni</h2>
+            <p>
+                Bu proje kapsamında toplanan veriler yalnızca araştırma ve farkındalık amacıyla kullanılacak olup,
+                6698 sayılı Kişisel Verilerin Korunması Kanunu (“KVKK”) uyarınca korunmaktadır.
+                Verileriniz hiçbir şekilde üçüncü taraflarla paylaşılmayacaktır.
+            </p>
+            <p>
+                Devam etmek için kişisel verilerinizin işlenmesine ilişkin <strong>açık rızanızı</strong> onaylamanız gerekmektedir.
+            </p>
+            <div class="modal-actions">
+                <button class="btn reject" onclick="closeKvkkModal()">Reddet</button>
+                <button class="btn accept" onclick="acceptKvkk()">Onaylıyorum</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const kvkkModal = document.getElementById('kvkkModal');
+
+        function openKvkkModal() {
+            kvkkModal.style.display = 'flex';
+        }
+
+        function closeKvkkModal() {
+            kvkkModal.style.display = 'none';
+        }
+
+        function acceptKvkk() {
+            // Onay durumunu kaydedebilir veya yönlendirme yapabilirsin
+            localStorage.setItem('kvkkAccepted', 'true');
+            window.location.href = '/index';
+        }
+
+        // Daha önce onay verilmişse direkt geç
+        window.onload = function() {
+            if (localStorage.getItem('kvkkAccepted') === 'true') {
+                window.location.href = '/index';
+            }
+        };
+    </script>
 </body>
 </html>
