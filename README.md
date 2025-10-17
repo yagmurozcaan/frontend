@@ -10,6 +10,7 @@ Kullanıcılar interaktif bir oyun oynarken kamera kaydı alınır; bu video bac
 frontend/
 
 │
+
 ├── home.html # Açılış ve KVKK onay ekranı
 
 ├── index.html # Kullanıcı giriş sayfası (isim/soyisim)
