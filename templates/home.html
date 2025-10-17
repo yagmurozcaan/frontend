@@ -1,3 +1,8 @@
+<!--
+Home Page for NEUROLOOK Project
+Landing page with KVKK (GDPR) consent modal for autism awareness project.
+Features neural network background animations and glassmorphism design with privacy compliance.
+-->
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -18,7 +23,6 @@
             position: relative;
         }
 
-        /* Arka plan animasyonu */
         .neural-bg {
             position: fixed;
             inset: 0;
@@ -45,7 +49,6 @@
             50% { transform: translate(10px, -8px); }
         }
 
-        /* Ana kutu */
         .container {
             text-align: center;
             background: rgba(255,255,255,0.06);
@@ -89,7 +92,6 @@
             transform: scale(1.05);
         }
 
-        /* KVKK modal */
         .modal {
             display: none;
             position: fixed;
@@ -169,13 +171,12 @@
         <button class="start-btn" onclick="openKvkkModal()">Başla</button>
     </div>
 
-    <!-- KVKK Modal -->
     <div class="modal" id="kvkkModal">
         <div class="modal-content">
             <h2>KVKK Aydınlatma Metni</h2>
             <p>
                 Bu proje kapsamında toplanan veriler yalnızca araştırma ve farkındalık amacıyla kullanılacak olup,
-                6698 sayılı Kişisel Verilerin Korunması Kanunu (“KVKK”) uyarınca korunmaktadır.
+                6698 sayılı Kişisel Verilerin Korunması Kanunu ("KVKK") uyarınca korunmaktadır.
                 Verileriniz hiçbir şekilde üçüncü taraflarla paylaşılmayacaktır.
             </p>
             <p>
@@ -200,12 +201,10 @@
         }
 
         function acceptKvkk() {
-            // Onay durumunu kaydedebilir veya yönlendirme yapabilirsin
             localStorage.setItem('kvkkAccepted', 'true');
             window.location.href = '/index';
         }
 
-        // Daha önce onay verilmişse direkt geç
         window.onload = function() {
             if (localStorage.getItem('kvkkAccepted') === 'true') {
                 window.location.href = '/index';

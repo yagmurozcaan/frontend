@@ -1,10 +1,14 @@
+<!--
+Video Recording Page for NEUROLOOK Project
+Interactive autism detection test with camera recording, eye tracking, and sequential games.
+Features MediaPipe face detection, speech synthesis, and real-time video processing with game-based data collection.
+-->
 <!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
 <title>Otizm Testi - Oyun Kaydı</title>
 <style>
-/* -------------------- BODY & ARKA PLAN -------------------- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: radial-gradient(1200px 600px at 10% 10%, rgba(79,172,254,0.25), transparent),
@@ -21,7 +25,6 @@ body {
     position: relative;
 }
 
-/* Arka plan animasyonu */
 body::before {
     content: '';
     position: fixed;
@@ -37,7 +40,6 @@ body::before {
 }
 @keyframes moveDots { from {background-position:0 0,20px 20px;} to {background-position:400px 400px,420px 420px;} }
 
-/* -------------------- KART & OYUN -------------------- */
 .card {
     background: rgba(255,255,255,0.06);
     border:1px solid rgba(255,255,255,0.12);
@@ -63,7 +65,6 @@ video { width:100%; border-radius:12px; border:1px solid rgba(255,255,255,0.2); 
 .stop { background: linear-gradient(135deg, #ef4444, #fca5a5); color: #0b1220; }
 .stop:disabled, .start:disabled { opacity:0.6; cursor:not-allowed; }
 
-/* -------------------- OYUN ALANI -------------------- */
 #gameArea {
     width:1200px; height:600px;
     border:1px solid rgba(255,255,255,0.12);
@@ -87,7 +88,6 @@ video { width:100%; border-radius:12px; border:1px solid rgba(255,255,255,0.2); 
     object-fit: contain;
 }
 
-/* 👋 El sallama gif */
 #waveGif {
     position:absolute;
     top:50%;
@@ -131,14 +131,12 @@ video { width:100%; border-radius:12px; border:1px solid rgba(255,255,255,0.2); 
     <div id="target"></div>
     <video id="faceVideo" autoplay muted></video>
 
-    <!-- 👋 Sadece el sallama GIF -->
     <img id="waveGif" src="/static/el-sallama.gif" alt="El sallama">
 
     <div id="loadingText">Yükleniyor, lütfen bekleyin...</div>
 </div>
 
 <script>
-// -------------------- KAMERA & KAYIT --------------------
 let mediaRecorder; let recordedChunks=[];
 const video=document.getElementById('preview');
 const startBtn=document.getElementById('startBtn');
@@ -187,7 +185,6 @@ stopBtn.onclick=()=>{
     clearAllIntervals();
 };
 
-// -------------------- OYUNLAR --------------------
 let intervals=[]; let timeouts=[];
 function clearAllIntervals(){
     intervals.forEach(i=>clearInterval(i));
@@ -219,7 +216,6 @@ function showFaceVideo(){
     new Audio('/static/sound.mp3').play();
 }
 
-/* 👋 Sadece gif göster */
 function showNameCall(){
     waveGif.style.display='block';
     const msg=new SpeechSynthesisUtterance(`Merhaba {{ isim }}!`);
@@ -246,7 +242,6 @@ function startSequentialGames(){
     nextStep();
 }
 
-// -------------------- GÖZ TAKİBİ --------------------
 function startEyeTracking(){
     const videoElement=document.getElementById('preview');
     let alertTriggered=false; let alertStartTime=null;

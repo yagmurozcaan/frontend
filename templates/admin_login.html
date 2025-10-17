@@ -1,3 +1,8 @@
+<!--
+Admin Login Page for NEUROLOOK Project
+Secure login interface for authorized personnel to access the admin panel.
+Features glassmorphism design with neural network background animations.
+-->
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -12,19 +17,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            
-            /* Mevcut Arka Planı Koruyoruz */
             background: radial-gradient(1200px 600px at 10% 10%, rgba(79,172,254,0.25), transparent),
                         radial-gradient(1000px 500px at 90% 20%, rgba(0,242,254,0.25), transparent),
                         linear-gradient(135deg, #111827, #0b1220);
             color: #e5e7eb;
-            overflow: hidden; /* Animasyonun taşmasını engeller */
-            position: relative; /* Animasyon katmanı için bağlam */
+            overflow: hidden;
+            position: relative;
         }
-        /* record.html ve admin.html'deki özel hizalama stillerini koruyun */
-        /* Örneğin record.html'de: align-items: flex-start; padding: 40px 24px; */
 
-        /* YENİ: Sinir Ağı/Nokta Animasyonu Katmanı */
         body::before {
             content: '';
             position: fixed;
@@ -32,27 +32,24 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* Nokta efekti oluşturmak için büyük, yarı saydam bir görüntü */
             background-image: radial-gradient(#00f2fe 1px, transparent 0),
                               radial-gradient(#4facfe 1px, transparent 0);
-            background-size: 40px 40px, 40px 40px; /* Noktaların aralığı */
-            background-position: 0 0, 20px 20px; /* İkinci nokta setini kaydır */
-            opacity: 0.15; /* Çok hafif bir etki için */
-            z-index: -1; /* Arka planda kalmasını sağlar */
-            animation: moveDots 60s linear infinite; /* Yavaş hareket animasyonu */
+            background-size: 40px 40px, 40px 40px;
+            background-position: 0 0, 20px 20px;
+            opacity: 0.15;
+            z-index: -1;
+            animation: moveDots 60s linear infinite;
         }
 
-        /* YENİ: Animasyon Keyframes */
         @keyframes moveDots {
             from {
                 background-position: 0 0, 20px 20px;
             }
             to {
-                background-position: 400px 400px, 420px 420px; /* Büyük hareket mesafesi */
+                background-position: 400px 400px, 420px 420px;
             }
         }
 
-        /* Animated neural network background */
         .neural-bg {
             position: fixed;
             inset: 0;

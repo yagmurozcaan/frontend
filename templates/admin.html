@@ -1,3 +1,8 @@
+<!--
+Admin Panel for NEUROLOOK Project
+Comprehensive dashboard for viewing and managing autism detection test results.
+Features filtering, search functionality, and detailed report visualization with responsive design.
+-->
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -18,7 +23,6 @@ body {
     color: #e5e7eb;
 }
 
-/* Ana kart */
 .container {
     background: rgba(17,24,39,0.85);
     width: 95%;
@@ -31,7 +35,6 @@ body {
     animation: fadeIn 0.8s ease;
 }
 
-/* Başlık */
 h2 {
     color: #4facfe;
     font-size: 28px;
@@ -39,7 +42,6 @@ h2 {
     letter-spacing: 0.5px;
 }
 
-/* Filtreler */
 .filters {
     display: flex;
     justify-content: center;
@@ -65,7 +67,6 @@ input[type="text"]:focus, select:focus {
     box-shadow: 0 0 0 3px rgba(79,172,254,0.4);
 }
 
-/* Tablo */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -91,7 +92,6 @@ th {
 tr:nth-child(even) { background-color: rgba(255,255,255,0.03); }
 tr:hover { background-color: rgba(79,172,254,0.1); transition: 0.3s; }
 
-/* Final Tahmin */
 .final-otizm {
     background: #f87171;
     border-radius: 8px;
@@ -110,20 +110,17 @@ tr:hover { background-color: rgba(79,172,254,0.1); transition: 0.3s; }
     font-weight: 600;
 }
 
-/* Linkler */
 a {
     color: #60a5fa;
     text-decoration: none;
 }
 a:hover { text-decoration: underline; }
 
-/* Animasyon */
 @keyframes fadeIn {
     from {opacity: 0; transform: translateY(20px);}
     to {opacity: 1; transform: translateY(0);}
 }
 
-/* Responsive */
 @media(max-width:768px){
     table, th, td { font-size:12px; }
     .filters { flex-direction: column; align-items: center; }
