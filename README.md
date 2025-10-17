@@ -10,8 +10,11 @@ Kullanıcılar interaktif bir oyun oynarken kamera kaydı alınır; bu video bac
 frontend/
 │
 ├── home.html # Açılış ve KVKK onay ekranı
+
 ├── index.html # Kullanıcı giriş sayfası (isim/soyisim)
+
 ├── record.html # Oyun alanı ve video kayıt sayfası
+
 └── admin_login.html # Yetkili kullanıcı giriş ekranı
 
 
