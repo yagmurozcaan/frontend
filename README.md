@@ -8,6 +8,7 @@ Kullanıcılar interaktif bir oyun oynarken kamera kaydı alınır; bu video bac
 ## 📁 Proje Yapısı
 
 frontend/
+
 │
 ├── home.html # Açılış ve KVKK onay ekranı
 
