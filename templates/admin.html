@@ -1,8 +1,3 @@
-<!--
-Admin Panel for NEUROLOOK Project
-Comprehensive dashboard for viewing and managing autism detection test results.
-Features filtering, search functionality, and detailed report visualization with responsive design.
--->
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -23,6 +18,7 @@ body {
     color: #e5e7eb;
 }
 
+/* Ana kart */
 .container {
     background: rgba(17,24,39,0.85);
     width: 95%;
@@ -35,6 +31,7 @@ body {
     animation: fadeIn 0.8s ease;
 }
 
+/* Başlık */
 h2 {
     color: #4facfe;
     font-size: 28px;
@@ -42,6 +39,7 @@ h2 {
     letter-spacing: 0.5px;
 }
 
+/* Filtreler */
 .filters {
     display: flex;
     justify-content: center;
@@ -67,6 +65,7 @@ input[type="text"]:focus, select:focus {
     box-shadow: 0 0 0 3px rgba(79,172,254,0.4);
 }
 
+/* Tablo */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -92,6 +91,7 @@ th {
 tr:nth-child(even) { background-color: rgba(255,255,255,0.03); }
 tr:hover { background-color: rgba(79,172,254,0.1); transition: 0.3s; }
 
+/* Final Tahmin */
 .final-otizm {
     background: #f87171;
     border-radius: 8px;
@@ -110,17 +110,42 @@ tr:hover { background-color: rgba(79,172,254,0.1); transition: 0.3s; }
     font-weight: 600;
 }
 
+/* Segment Tablo */
+.segment-table {
+    margin-top: 10px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.segment-table th, .segment-table td {
+    padding: 6px 8px;
+    font-size: 12px;
+    color: #fff;
+}
+
+.segment-table th {
+    background: #2563eb;
+    color: #fff;
+    font-weight: 500;
+}
+
+.segment-table tr:nth-child(even) { background-color: rgba(255,255,255,0.05); }
+.segment-table tr:hover { background-color: rgba(79,172,254,0.2); }
+
+/* Linkler */
 a {
     color: #60a5fa;
     text-decoration: none;
 }
 a:hover { text-decoration: underline; }
 
+/* Animasyon */
 @keyframes fadeIn {
     from {opacity: 0; transform: translateY(20px);}
     to {opacity: 1; transform: translateY(0);}
 }
 
+/* Responsive */
 @media(max-width:768px){
     table, th, td { font-size:12px; }
     .filters { flex-direction: column; align-items: center; }
@@ -150,12 +175,11 @@ a:hover { text-decoration: underline; }
                 <th>Dosya</th>
                 <th>Probability</th>
                 <th>Final Tahmin</th>
-                <th>Hand Motion</th>
-                <th>Head Motion</th>
-                <th>Spinning</th>
-                <th>Blink</th>
-                <th>created_at</th>
-
+                <th>el çırpma hareketi</th>
+                <th>Baş hareketi</th>
+                <th>Dönme Hareketi</th>
+                <th>göz kırpma</th>
+                <th>Tarih</th>
             </tr>
         </thead>
         <tbody>
@@ -163,7 +187,7 @@ a:hover { text-decoration: underline; }
             <tr>
                 <td>{{ rec.isim }}</td>
                 <td>{{ rec.soyisim }}</td>
-                <td><a href="{{ url_for('static', filename='uploads/' + rec.dosya) }}">{{ rec.dosya }}</a></td>
+                <td><a href="#" class="video-link" data-idx="{{ loop.index0 }}">{{ rec.dosya }}</a></td>
                 <td>{{ "%.2f"|format(rec.probability) }}</td>
                 <td class="{{ 'final-otizm' if rec.final_prediction == 'Otizm olabilir' else 'final-normal' }}">{{ rec.final_prediction }}</td>
                 <td>{{ rec.armflapping }}</td>
@@ -171,8 +195,38 @@ a:hover { text-decoration: underline; }
                 <td>{{ rec.spinning }}</td>
                 <td>{{ rec.blink }}</td>
                 <td>{{ rec.created_at }}</td>
-
             </tr>
+
+            <!-- Segment tablosu -->
+            <tr class="segment-table-row" id="segments-{{ loop.index0 }}" style="display:none;">
+                <td colspan="10">
+                    <table class="segment-table">
+                        <thead>
+                            <tr>
+                                <th>Segment #</th>
+                                <th>Probability</th>
+                                <th>Armflapping</th>
+                                <th>Headbanging</th>
+                                <th>Spinning</th>
+                                <th>Blink</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for seg in rec.segments %}
+                            <tr>
+                                <td>{{ seg.segment_index }}</td>
+                                <td>{{ "%.2f"|format(seg.probability) }}</td>
+                                <td>{{ seg.armflapping }}</td>
+                                <td>{{ seg.headbanging }}</td>
+                                <td>{{ seg.spinning }}</td>
+                                <td>{{ seg.blink }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+
             {% endfor %}
         </tbody>
     </table>
@@ -188,19 +242,39 @@ function filterTable() {
     const finalValue = finalFilter.value;
 
     for (let row of table.rows) {
-        const isim = row.cells[0].innerText.toLowerCase();
-        const soyisim = row.cells[1].innerText.toLowerCase();
-        const final = row.cells[4].innerText;
+        // Ana tablo satırları
+        if (!row.classList.contains('segment-table-row')) {
+            const isim = row.cells[0].innerText.toLowerCase();
+            const soyisim = row.cells[1].innerText.toLowerCase();
+            const final = row.cells[4].innerText;
 
-        const matchesSearch = isim.includes(searchValue) || soyisim.includes(searchValue);
-        const matchesFinal = finalValue === "" || final === finalValue;
+            const matchesSearch = isim.includes(searchValue) || soyisim.includes(searchValue);
+            const matchesFinal = finalValue === "" || final === finalValue;
 
-        row.style.display = (matchesSearch && matchesFinal) ? "" : "none";
+            row.style.display = (matchesSearch && matchesFinal) ? "" : "none";
+
+            // segment tablosunu da gizle
+            const idx = row.querySelector('.video-link')?.dataset.idx;
+            if (idx) {
+                const segmentRow = document.getElementById('segments-' + idx);
+                if (segmentRow) segmentRow.style.display = "none";
+            }
+        }
     }
 }
 
 searchInput.addEventListener('input', filterTable);
 finalFilter.addEventListener('change', filterTable);
+
+// Video linklerine tıklayınca segment aç/kapat
+document.querySelectorAll('.video-link').forEach(link => {
+    link.addEventListener('click', function(e){
+        e.preventDefault();
+        const idx = this.dataset.idx;
+        const row = document.getElementById('segments-' + idx);
+        row.style.display = (row.style.display === 'none') ? 'table-row' : 'none';
+    });
+});
 </script>
 
 </body>

@@ -136,10 +136,10 @@ video { width:100%; border-radius:12px; border:1px solid rgba(255,255,255,0.2); 
 
     <div id="loadingText">Yükleniyor, lütfen bekleyin...</div>
 </div>
-
 <script>
 // -------------------- KAMERA & KAYIT --------------------
-let mediaRecorder; let recordedChunks=[];
+let mediaRecorder; 
+let recordedChunks=[];
 const video=document.getElementById('preview');
 const startBtn=document.getElementById('startBtn');
 const stopBtn=document.getElementById('stopBtn');
@@ -150,12 +150,20 @@ const faceVideo=document.getElementById('faceVideo');
 const waveGif=document.getElementById('waveGif');
 const loadingText=document.getElementById('loadingText');
 
+// 👁️ Göz takibi için global
+let eyeTrackingCamera = null;
+let faceMesh = null;
+
 navigator.mediaDevices.getUserMedia({video:true,audio:false})
 .then(stream=>{
     video.srcObject=stream;
     mediaRecorder=new MediaRecorder(stream);
     mediaRecorder.ondataavailable=e=>{if(e.data.size>0) recordedChunks.push(e.data);}
     mediaRecorder.onstop=()=>{
+        // Kayıt durdu → göz takibini durdur
+        stopEyeTracking();
+
+        // Model gönderimi ve bekleme
         loadingText.style.display='block';
         const blob=new Blob(recordedChunks,{type:'video/webm'});
         recordedChunks=[];
@@ -169,7 +177,8 @@ navigator.mediaDevices.getUserMedia({video:true,audio:false})
             if(resp.ok) window.location.href="/finish";
             else alert("Video yüklenirken hata oluştu.");
         });
-        card.classList.remove('shrink'); clearAllIntervals();
+        card.classList.remove('shrink'); 
+        clearAllIntervals();
     };
 })
 .catch(err=>alert("Kamera açılamadı: "+err));
@@ -179,8 +188,9 @@ startBtn.onclick=()=>{
     startBtn.disabled=true; stopBtn.disabled=false;
     card.classList.add('shrink');
     startSequentialGames();
-    startEyeTracking();
+    startEyeTracking(); // kayıt sırasında başlat
 };
+
 stopBtn.onclick=()=>{
     if(mediaRecorder.state!=="inactive") mediaRecorder.stop();
     startBtn.disabled=false; stopBtn.disabled=true;
@@ -188,10 +198,12 @@ stopBtn.onclick=()=>{
 };
 
 // -------------------- OYUNLAR --------------------
-let intervals=[]; let timeouts=[];
+let intervals=[]; 
+let timeouts=[];
 function clearAllIntervals(){
     intervals.forEach(i=>clearInterval(i));
-    intervals=[]; timeouts.forEach(t=>clearTimeout(t));
+    intervals=[];
+    timeouts.forEach(t=>clearTimeout(t));
     timeouts=[];
     target.style.display='none';
     faceVideo.style.display='none';
@@ -249,9 +261,12 @@ function startSequentialGames(){
 // -------------------- GÖZ TAKİBİ --------------------
 function startEyeTracking(){
     const videoElement=document.getElementById('preview');
-    let alertTriggered=false; let alertStartTime=null;
-    const ALERT_SECONDS=3; const EYE_AR_THRESHOLD=0.25;
-    const faceMesh=new FaceMesh({locateFile:file=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`});
+    let alertTriggered=false; 
+    let alertStartTime=null;
+    const ALERT_SECONDS=3; 
+    const EYE_AR_THRESHOLD=0.25;
+
+    faceMesh = new FaceMesh({locateFile:file=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`});
     faceMesh.setOptions({maxNumFaces:1, refineLandmarks:true, minDetectionConfidence:0.5, minTrackingConfidence:0.5});
     faceMesh.onResults(results=>{
         let alertCondition=false;
@@ -260,7 +275,7 @@ function startEyeTracking(){
             function eyeAspectRatio(indices){
                 function dist(a,b){return Math.hypot(a.x-b.x,a.y-b.y);}
                 const hor=dist(l[indices[0]],l[indices[3]]);
-                const ver=(dist(l[indices[1]],l[indices[5]])+dist(l[indices[2]],l[indices[4]]))/2;
+                const ver=(dist(l[indices[1]],l[indices[5]])+dist(l[indices[2]],l[indices[4]]) )/2;
                 return ver/hor;
             }
             const LEFT_EYE=[33,160,158,133,153,144];
@@ -281,10 +296,26 @@ function startEyeTracking(){
             alertTriggered=false;
         }
     });
-    const camera=new Camera(videoElement,{onFrame:async()=>{await faceMesh.send({image:videoElement});}, width:640,height:480});
-    camera.start();
+
+    eyeTrackingCamera = new Camera(videoElement,{
+        onFrame: async()=>{await faceMesh.send({image:videoElement});}, 
+        width:640, height:480
+    });
+    eyeTrackingCamera.start();
+}
+
+function stopEyeTracking(){
+    if(eyeTrackingCamera){
+        eyeTrackingCamera.stop();
+        eyeTrackingCamera=null;
+    }
+    if(faceMesh){
+        faceMesh.close();
+        faceMesh=null;
+    }
 }
 </script>
+
 <!-- 🔹 MediaPipe Gerekli Scriptler -->
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
