@@ -85,7 +85,7 @@ Her kullanıcıya ait video, modelin hesapladığı olasılıklar ve segment baz
 Video uzantısına tıkladığı durumda o videoya ait alt segmentlerin sonuçlarını da inceleyebilir.
 
 **Görsel önizleme:**  
-![Admin Panel Tablosu](static/admin_main_table.jpg)
+![Admin Panel Tablosu](static/admin_main_table.JPG)
 
 ---
 
