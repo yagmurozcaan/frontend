@@ -78,6 +78,27 @@ Admin kullanıcılar bu sayfadan backend paneline erişir.
 
 ---
 
+## 📊 `admin.html`
+
+Sistemde toplanan analiz sonuçlarını görüntülemek için kullanılan **admin paneli** sayfasıdır.  
+Her kullanıcıya ait video, modelin hesapladığı olasılıklar ve segment bazlı hareket tespitleriyle birlikte tablo halinde sunulur.
+Video uzantısına tıkladığı durumda o videoya ait alt segmentlerin sonuçlarını da inceleyebilir.
+
+**Görsel önizleme:**  
+![Admin Panel Tablosu](static/admin_main_table.jpg)
+
+---
+
+### 🔹 Sayfa Özellikleri
+
+- 🔍 **Arama ve filtreleme:** İsim, soyisim, final tahmin alanlarına göre dinamik filtreleme  
+- 📊 **Segment detayları:** Tablo altına açılıp kapanabilen alt tablo görünümü  
+- 🎨 **Renk kodlu tahmin göstergeleri:**  
+  - 🟥 **Otizm olabilir** → kırmızı arka plan  
+  - 🟩 **Otizm değil** → yeşil arka plan  
+
+---
+
 ## 🔗 Backend Entegrasyonu
 
 Frontend, aşağıdaki endpoint’lerle backend ile iletişim kurar:
